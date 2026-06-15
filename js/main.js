@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initYear();
   initNavHighlight();
+  initCardScreenshots();
 });
 
 // ============ NAVIGATION ============
@@ -150,13 +151,25 @@ function openModal(id) {
         <i class="fa-solid fa-eye-slash"></i> Private Deployment
        </span>`;
 
+  const thumbHtml = project.screenshots && project.screenshots.length > 0
+    ? `<div class="mod-screenshots">
+        <div class="mod-ss-wrap" id="modSsWrap">
+          ${project.screenshots.map((s, i) => `<img src="${s}" alt="Screenshot ${i+1}" class="mod-ss-img${i===0?' mod-ss-active':''}" />`).join('')}
+        </div>
+        ${project.screenshots.length > 1 ? `
+        <div class="mod-ss-dots">
+          ${project.screenshots.map((_, i) => `<button class="mod-ss-dot${i===0?' active':''}" onclick="modSsGo(${i})" aria-label="Screenshot ${i+1}"></button>`).join('')}
+        </div>` : ''}
+      </div>`
+    : `<div class="pc-thumb" style="height:180px; border-radius:12px; overflow:hidden; margin-bottom:24px; position:relative;">
+        <div class="pc-thumb-placeholder" style="background:${project.bgColor}; height:180px; font-size:3.5rem;">
+          <i class="fa-solid ${project.icon}"></i>
+        </div>
+        ${project.isPrivate ? '<div style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#e8e8f0;font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:6px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-shield-halved" style="color:#7c6eff"></i> Private Client Project</div>' : ''}
+      </div>`;
+
   body.innerHTML = `
-    <div class="pc-thumb" style="height:180px; border-radius:12px; overflow:hidden; margin-bottom:24px; position:relative;">
-      <div class="pc-thumb-placeholder" style="background:${project.bgColor}; height:180px; font-size:3.5rem;">
-        <i class="fa-solid ${project.icon}"></i>
-      </div>
-      ${project.isPrivate ? '<div style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#e8e8f0;font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:6px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-shield-halved" style="color:#7c6eff"></i> Private Client Project</div>' : ''}
-    </div>
+    ${thumbHtml}
     <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:8px;">${project.title}</h2>
     <div class="mod-tags" style="margin-bottom:20px;">${project.tech.map(t => `<span>${t}</span>`).join('')}</div>
 
@@ -212,6 +225,36 @@ function closeModal() {
 // Expose globally
 window.openModal = openModal;
 window.closeModal = closeModal;
+
+// Modal screenshot navigation
+window.modSsGo = function(idx) {
+  const imgs = document.querySelectorAll('.mod-ss-img');
+  const dots = document.querySelectorAll('.mod-ss-dot');
+  imgs.forEach((img, i) => img.classList.toggle('mod-ss-active', i === idx));
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+};
+
+// Auto-cycle project card screenshots
+function initCardScreenshots() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    const shots = card.querySelectorAll('.pc-screenshot');
+    if (shots.length < 2) return;
+    let idx = 0;
+    card.addEventListener('mouseenter', () => {
+      card._ssInterval = setInterval(() => {
+        shots[idx].classList.remove('pc-screenshot-active');
+        idx = (idx + 1) % shots.length;
+        shots[idx].classList.add('pc-screenshot-active');
+      }, 1400);
+    });
+    card.addEventListener('mouseleave', () => {
+      clearInterval(card._ssInterval);
+      shots.forEach(s => s.classList.remove('pc-screenshot-active'));
+      shots[0].classList.add('pc-screenshot-active');
+      idx = 0;
+    });
+  });
+}
 
 // ============ FILE UPLOAD UI ============
 function initFileUpload() {

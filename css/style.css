@@ -1598,3 +1598,75 @@ a.ci-item:hover { border-color: var(--accent); }
 @media (max-width: 520px) {
   .case-study-grid { grid-template-columns: 1fr; }
 }
+
+/* ============ PROJECT CARD SCREENSHOTS ============ */
+.pc-screenshot-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #0a0a0f;
+}
+.pc-screenshot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: scale(1.03);
+}
+.pc-screenshot-active {
+  opacity: 1;
+  transform: scale(1);
+}
+.project-card:hover .pc-screenshot-active {
+  transform: scale(1.05);
+}
+
+/* ============ MODAL SCREENSHOTS ============ */
+.mod-screenshots {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 22px;
+  background: #0a0a0f;
+  position: relative;
+}
+.mod-ss-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+.mod-ss-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.mod-ss-active { opacity: 1; }
+.mod-ss-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px;
+  background: rgba(0,0,0,0.4);
+}
+.mod-ss-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  padding: 0;
+}
+.mod-ss-dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
+}

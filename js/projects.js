@@ -27,7 +27,8 @@ const PROJECTS_DATA = [
     github: "https://github.com/Vibhor-saini/baseline_chat",
     live: "#",
     bgColor: "linear-gradient(135deg, #1a1a2e, #16213e)",
-    icon: "fa-comments"
+    icon: "fa-comments",
+    screenshots: []
   },
   {
     id: 1,
@@ -53,7 +54,8 @@ const PROJECTS_DATA = [
     github: "#",
     live: "https://team.subminimal.com/login",
     bgColor: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
-    icon: "fa-lock"
+    icon: "fa-lock",
+    screenshots: ["assets/sam-login.png", "assets/sam-dashboard.png"]
   },
   {
     id: 2,
@@ -79,7 +81,8 @@ const PROJECTS_DATA = [
     github: "#",
     live: "#",
     bgColor: "linear-gradient(135deg, #1a0533, #4a0e8f40)",
-    icon: "fa-plug-circle-bolt"
+    icon: "fa-plug-circle-bolt",
+    screenshots: []
   },
   {
     id: 3,
@@ -105,7 +108,8 @@ const PROJECTS_DATA = [
     github: "#",
     live: "#",
     bgColor: "linear-gradient(135deg, #003049, #d62828)",
-    icon: "fa-message"
+    icon: "fa-message",
+    screenshots: []
   },
   {
     id: 4,
@@ -131,7 +135,8 @@ const PROJECTS_DATA = [
     github: "#",
     live: "https://jobs.baselineitdevelopment.com/",
     bgColor: "linear-gradient(135deg, #0d0d0d, #1d3557)",
-    icon: "fa-briefcase"
+    icon: "fa-briefcase",
+    screenshots: ["assets/jobportal-home.png", "assets/jobportal-jobs.png"]
   },
   {
     id: 5,
@@ -157,6 +162,7 @@ const PROJECTS_DATA = [
     github: "#",
     live: "http://defenders.topscripts.in/Clinic_Management_System",
     bgColor: "linear-gradient(135deg, #16222A, #3A6073)",
-    icon: "fa-user-doctor"
+    icon: "fa-user-doctor",
+    screenshots: ["assets/clinic-home.png", "assets/clinic-dashboard.png"]
   }
 ];

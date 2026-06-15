@@ -848,11 +848,14 @@
                 <div class="input-wrap select-wrap">
                   <i class="fa-solid fa-dollar-sign input-icon"></i>
                   <select name="budget" class="form-input form-select" required>
-                    <option value="" disabled selected>Select your budget...</option>
-                    <option>Under $100</option>
-                    <option>$100 – $500</option>
-                    <option>$500 – $1,000</option>
-                    <option>$1,000+</option>
+                    <option value="" disabled selected>Select your project budget</option>
+
+                    <option value="under-500">Under $500</option>
+                    <option value="500-1000">$500 – $1,000</option>
+                    <option value="1000-3000">$1,000 – $3,000</option>
+                    <option value="3000-plus">$3,000+</option>
+
+                    <option value="custom">Custom Budget</option>
                   </select>
                   <i class="fa-solid fa-chevron-down select-arrow"></i>
                 </div>

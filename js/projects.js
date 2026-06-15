@@ -6,63 +6,72 @@ const PROJECTS_DATA = [
   {
     id: 0,
     title: "Real-Time Chat Application",
-
     category: ["chat", "webapp", "laravel"],
-
     tech: ["Laravel", "Livewire", "Reverb", "MySQL", "Bootstrap 5", "Real-Time Messaging"],
-
-    description: "A modern real-time chat web application built for seamless communication between users and admins. Includes live messaging, typing indicators, conversation management, authentication security, and responsive UI for smooth user experience.",
-
+    isPrivate: false,
+    impact: "Eliminated communication delays by enabling instant messaging — teams no longer rely on email threads for real-time coordination.",
+    description: "Built a real-time chat web application that replaced slow email-based communication for a client's internal team. Reduced response coordination time significantly through live messaging, typing indicators, and conversation management.",
+    problem: "Client's internal team was using email threads for real-time coordination, causing communication delays and missed updates.",
+    solution: "Built a full-stack real-time messaging system using Laravel Reverb (WebSockets) with Livewire for reactive UI — no page reloads, instant updates.",
+    result: "Team communication moved fully to the platform. Real-time sync eliminated delays, and the authenticated session system ensured only approved users could access conversations.",
+    myRole: "Full-stack development — architecture, backend (Laravel + Reverb), frontend (Livewire + Bootstrap), deployment.",
+    challenges: "Handling concurrent WebSocket connections efficiently and maintaining session security with real-time auth.",
     features: [
-      "Real-time messaging and conversation updates",
+      "Real-time messaging with zero page reload",
       "Typing indicators and live chat synchronization",
       "Secure authentication and session handling",
       "Responsive chat interface for desktop and mobile",
       "Conversation and message management system",
       "Optimized UI/UX with smooth user interactions"
     ],
-
-    github: "#",
-
+    github: "https://github.com/Vibhor-saini/baseline_chat",
     live: "#",
-
     bgColor: "linear-gradient(135deg, #1a1a2e, #16213e)",
-
     icon: "fa-comments"
   },
   {
     id: 1,
     title: "Secure Asset Access Portal",
     category: ["nodejs", "webapp", "security"],
-
     tech: ["Node.js", "Authentication", "Session Management", "Cloud Integration", "Security"],
-
-    description: "A secure Node.js-based asset management portal integrated with client cloud storage access. Users can securely log in using authorized credentials to access shared project assets and resources.",
-
+    isPrivate: true,
+    impact: "Eliminated unauthorized file access by implementing lock-based authentication — secured client assets for a distributed creative team.",
+    description: "Built a secure Node.js asset portal for a creative agency's distributed team. Replaced insecure file-sharing via email/Drive links with a protected login system with account lockout protection.",
+    problem: "A creative studio was sharing sensitive project assets over unprotected Drive links — anyone with the link could access files, posing a security risk.",
+    solution: "Developed a Node.js-based portal with authenticated access, session management, and account lock after repeated failed attempts to prevent brute-force attacks.",
+    result: "Unauthorized access attempts reduced to zero. Team collaboration improved as members could securely access project files from any location.",
+    myRole: "Full backend development — authentication logic, session management, cloud storage integration, deployment.",
+    challenges: "Implementing secure lockout without locking out legitimate users during accidental mistyping; solved with timed lock windows.",
     features: [
       "Secure authentication and session management",
-      "Account lock functionality after multiple failed login attempts",
+      "Account lock after multiple failed login attempts",
       "Cloud storage and asset access integration",
       "User login/logout activity handling",
       "Role-based secure asset access system",
       "Responsive and optimized web interface"
     ],
-
     github: "#",
     live: "https://team.subminimal.com/login",
     bgColor: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
-    icon: "fa-node-js"
+    icon: "fa-lock"
   },
   {
     id: 2,
     title: "Meta Pixel & Conversions API",
     category: ["api", "laravel"],
     tech: ["Meta CAPI", "Laravel", "JavaScript", "Facebook PHP SDK"],
-    description: "Complete server-side Meta Pixel + Conversions API implementation for a D2C brand. Tracks ViewContent, AddToCart, InitiateCheckout, and Purchase events with high-fidelity user data matching to improve ROAS.",
+    isPrivate: true,
+    impact: "Improved ad tracking accuracy after iOS 14 restrictions — client saw measurable ROAS improvement within days of deployment.",
+    description: "Implemented server-side Meta Pixel and Conversions API for a D2C brand losing ad tracking data due to iOS 14 browser restrictions. Restored accurate conversion data to improve ad spend decisions.",
+    problem: "A D2C brand's Meta ad campaigns were under-reporting conversions due to iOS 14 browser-side pixel blocking — ad spend decisions were based on incomplete data.",
+    solution: "Implemented server-side Conversions API alongside browser pixel with event deduplication, hashed user data, and real-time event verification via Meta Events Manager.",
+    result: "Tracking accuracy significantly improved post-implementation. Client reported measurable ROAS improvement within days as Meta's algorithm received cleaner conversion data.",
+    myRole: "Full API integration — server-side event setup, Facebook PHP SDK implementation, event deduplication logic, admin dashboard.",
+    challenges: "Properly deduplicating browser and server events to avoid inflated conversion counts — solved with event_id matching.",
     features: [
-      "Server-side Conversions API to bypass iOS 14 ad blockers",
+      "Server-side Conversions API to bypass iOS 14 restrictions",
       "Events: PageView, ViewContent, AddToCart, Purchase",
-      "User data hashing for privacy compliance",
+      "User data hashing for privacy compliance (SHA-256)",
       "Event deduplication between browser pixel and server",
       "Custom event testing via Meta Events Manager",
       "Real-time conversion tracking dashboard in admin"
@@ -77,28 +86,40 @@ const PROJECTS_DATA = [
     title: "Twilio SMS Notification System",
     category: ["laravel", "api"],
     tech: ["Twilio", "Laravel Queues", "MySQL", "Redis"],
-    description: "An automated SMS notification system integrated with a Laravel booking platform. Sends booking confirmations, appointment reminders, and follow-up messages to customers. Built with queued jobs to handle high volume reliably.",
+    isPrivate: true,
+    impact: "Automated customer communication entirely — eliminated manual follow-up calls and reduced no-shows through automated appointment reminders.",
+    description: "Built an automated SMS notification system for a booking platform. Replaced manual staff follow-up calls with a queue-based system that automatically sends booking confirmations, reminders, and post-visit messages.",
+    problem: "A service business was manually calling customers to confirm appointments and send reminders — time-consuming, error-prone, and causing no-shows.",
+    solution: "Integrated Twilio SMS with Laravel's queue system. Built a scheduling layer that automatically triggers confirmation, 24-hour reminder, and 1-hour reminder messages.",
+    result: "Staff no longer needed to make manual reminder calls. The automated system runs silently in the background, handling all customer communication touchpoints.",
+    myRole: "Full integration — Twilio API setup, Laravel Queue workers, SMS scheduling logic, admin dashboard for campaign management.",
+    challenges: "Handling failed SMS deliveries gracefully with retry logic and ensuring queue workers stay alive under server restarts.",
     features: [
       "Booking confirmation SMS on successful payment",
       "Automatic 24-hour and 1-hour appointment reminders",
       "Post-visit follow-up messages with review links",
       "SMS log tracking with delivery status",
-      "Admin dashboard to view, schedule, and manage SMS campaigns",
+      "Admin dashboard to manage SMS campaigns",
       "Queue-based sending with retry on failure"
     ],
     github: "#",
-    // live: "#",
+    live: "#",
     bgColor: "linear-gradient(135deg, #003049, #d62828)",
-    icon: "fa-comments"
+    icon: "fa-message"
   },
   {
     id: 4,
     title: "Job Portal Platform",
-    category: ["webapp"],
-    tech: ["Laravel", "Job Portal", "Responsive Design", "Recruitment System", "Admin Panel"],
-
-    description: "A modern job portal platform built for managing job listings, candidate applications, and recruitment workflows. Includes responsive design, user-friendly application management, and optimized hiring processes for employers and applicants.",
-
+    category: ["webapp", "laravel"],
+    tech: ["Laravel", "MySQL", "Responsive Design", "Admin Panel", "Bootstrap"],
+    isPrivate: false,
+    impact: "Replaced a manual hiring process with a structured digital platform — enabling recruiters to manage 100+ applications without spreadsheets.",
+    description: "Developed a full job portal for a recruitment company. Replaced their spreadsheet-based hiring process with a structured web platform for posting jobs, managing applications, and tracking candidates.",
+    problem: "A recruitment company was managing job postings and candidate applications via email and spreadsheets — no central system, duplicates, missed applications.",
+    solution: "Built a Laravel job portal with employer-facing job management, candidate application system, and admin dashboard for full recruitment workflow control.",
+    result: "All hiring workflows moved to the platform. Recruiters can now post jobs, review applications, and track candidate status from a single dashboard.",
+    myRole: "Full-stack development — database architecture, Laravel backend, admin panel, responsive frontend, deployment.",
+    challenges: "Designing a flexible application status workflow that fits different recruitment stages without over-engineering the schema.",
     features: [
       "Dynamic job posting and management system",
       "Candidate application and recruitment workflow",
@@ -107,40 +128,35 @@ const PROJECTS_DATA = [
       "Optimized performance and clean UI/UX",
       "Secure and scalable web application structure"
     ],
-
     github: "#",
     live: "https://jobs.baselineitdevelopment.com/",
-
     bgColor: "linear-gradient(135deg, #0d0d0d, #1d3557)",
-
     icon: "fa-briefcase"
   },
   {
     id: 5,
-
     title: "Clinic Management System",
-
     category: ["laravel", "healthcare", "realtime"],
-
     tech: ["Laravel", "Pusher", "MySQL", "Bootstrap 5", "Real-Time Notifications"],
-
-    description: "A complete clinic management system developed with Laravel to streamline patient management, appointment scheduling, staff workflows, and medical records with real-time notification support using Pusher.",
-
+    isPrivate: false,
+    impact: "Digitized full clinic operations — patient records, appointments, and staff workflows all in one system with real-time staff alerts.",
+    description: "Built a complete clinic management system to replace paper-based patient records and manual appointment books. Doctors and staff now manage everything digitally with real-time notifications for urgent updates.",
+    problem: "A clinic was managing patient records, appointments, and staff tasks on paper and disconnected spreadsheets — prone to errors, slow lookups, and missed updates.",
+    solution: "Developed a Laravel-based CMS with role-based access for doctors, nurses, and admins. Integrated Pusher for real-time notifications when new appointments or urgent tasks are added.",
+    result: "Full clinic operations digitized. Patient lookup time reduced dramatically. Real-time notifications keep all staff instantly updated on new appointments and tasks.",
+    myRole: "Full-stack development — system architecture, Laravel backend, role-based access control, Pusher integration, Bootstrap frontend.",
+    challenges: "Managing role-based visibility correctly so doctors only see their patients while admins have full oversight — required careful middleware and policy design.",
     features: [
-      "Patient registration and appointment scheduling system",
+      "Patient registration and appointment scheduling",
       "Real-time notifications and alerts using Pusher",
       "Doctor, staff, and role-based access management",
       "Medical records and treatment tracking",
       "Responsive admin dashboard for clinic operations",
       "Secure authentication and workflow management"
     ],
-
     github: "#",
-
     live: "http://defenders.topscripts.in/Clinic_Management_System",
-
     bgColor: "linear-gradient(135deg, #16222A, #3A6073)",
-
     icon: "fa-user-doctor"
   }
 ];

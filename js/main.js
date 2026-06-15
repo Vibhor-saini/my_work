@@ -130,26 +130,72 @@ function openModal(id) {
   const overlay = $('#modalOverlay');
   const body = $('#modalBody');
 
+  const githubBtn = project.isPrivate
+    ? `<span class="btn-ghost mod-nda-btn" style="flex:1; justify-content:center; opacity:0.6; cursor:default;">
+        <i class="fa-solid fa-lock"></i> NDA Protected
+      </span>`
+    : (project.github && project.github !== '#'
+        ? `<a href="${project.github}" target="_blank" class="btn-ghost" style="flex:1; justify-content:center;">
+            <i class="fa-brands fa-github"></i> View Code
+           </a>`
+        : `<span class="btn-ghost mod-nda-btn" style="flex:1; justify-content:center; opacity:0.5; cursor:default;">
+            <i class="fa-brands fa-github"></i> Private Repo
+           </span>`);
+
+  const liveBtn = project.live && project.live !== '#'
+    ? `<a href="${project.live}" target="_blank" class="btn-primary" style="flex:1; justify-content:center;">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+       </a>`
+    : `<span class="btn-primary" style="flex:1; justify-content:center; opacity:0.5; cursor:default;">
+        <i class="fa-solid fa-eye-slash"></i> Private Deployment
+       </span>`;
+
   body.innerHTML = `
-    <div class="pc-thumb" style="height:200px; border-radius:12px; overflow:hidden; margin-bottom:24px;">
-      <div class="pc-thumb-placeholder" style="background:${project.bgColor}; height:200px; font-size:3.5rem;">
+    <div class="pc-thumb" style="height:180px; border-radius:12px; overflow:hidden; margin-bottom:24px; position:relative;">
+      <div class="pc-thumb-placeholder" style="background:${project.bgColor}; height:180px; font-size:3.5rem;">
         <i class="fa-solid ${project.icon}"></i>
       </div>
+      ${project.isPrivate ? '<div style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);color:#e8e8f0;font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:6px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-shield-halved" style="color:#7c6eff"></i> Private Client Project</div>' : ''}
     </div>
-    <h2>${project.title}</h2>
-    <div class="mod-tags">${project.tech.map(t => `<span>${t}</span>`).join('')}</div>
-    <p>${project.description}</p>
-    <b style="display:block;margin-bottom:12px;color:var(--text);">Key Features</b>
+    <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:8px;">${project.title}</h2>
+    <div class="mod-tags" style="margin-bottom:20px;">${project.tech.map(t => `<span>${t}</span>`).join('')}</div>
+
+    <div class="mod-impact">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>${project.impact}</span>
+    </div>
+
+    <div class="case-study-grid">
+      <div class="cs-block cs-problem">
+        <div class="cs-label"><i class="fa-solid fa-circle-exclamation"></i> Problem</div>
+        <p>${project.problem}</p>
+      </div>
+      <div class="cs-block cs-solution">
+        <div class="cs-label"><i class="fa-solid fa-lightbulb"></i> Solution</div>
+        <p>${project.solution}</p>
+      </div>
+      <div class="cs-block cs-result">
+        <div class="cs-label"><i class="fa-solid fa-trophy"></i> Result</div>
+        <p>${project.result}</p>
+      </div>
+      <div class="cs-block cs-role">
+        <div class="cs-label"><i class="fa-solid fa-user-gear"></i> My Role</div>
+        <p>${project.myRole}</p>
+      </div>
+    </div>
+
+    <div class="cs-challenges">
+      <div class="cs-label" style="margin-bottom:10px;"><i class="fa-solid fa-bolt"></i> Key Challenge Solved</div>
+      <p style="color:var(--text2);font-size:0.88rem;">${project.challenges}</p>
+    </div>
+
+    <b style="display:block;margin-bottom:12px;color:var(--text);font-size:0.9rem;">Key Features</b>
     <ul class="mod-features">
       ${project.features.map(f => `<li>${f}</li>`).join('')}
     </ul>
     <div class="modal-links">
-      <a href="${project.github}" target="_blank" class="btn-ghost" style="flex:1; justify-content:center;">
-        <i class="fa-brands fa-github"></i> View Code
-      </a>
-      <a href="${project.live}" target="_blank" class="btn-primary" style="flex:1; justify-content:center;">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-      </a>
+      ${githubBtn}
+      ${liveBtn}
     </div>
   `;
 

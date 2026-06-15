@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vibhor Saini — Resume</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Arial', sans-serif;
+    font-size: 10.5pt;
+    color: #1a1a1a;
+    background: #fff;
+    line-height: 1.5;
+  }
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 36px 44px;
+  }
+
+  /* ---- HEADER ---- */
+  .header { text-align: center; margin-bottom: 14px; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; }
+  .header h1 { font-size: 20pt; font-weight: 700; letter-spacing: 1px; margin-bottom: 5px; }
+  .contact-line { font-size: 9.5pt; color: #333; }
+  .contact-line a { color: #1a1a1a; text-decoration: none; }
+  .contact-line span { margin: 0 6px; color: #888; }
+
+  /* ---- SECTION ---- */
+  .section { margin-bottom: 14px; }
+  .section-title {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+
+  /* ---- SUMMARY ---- */
+  .summary p { font-size: 10pt; color: #222; line-height: 1.6; }
+
+  /* ---- SKILLS ---- */
+  .skills-table { width: 100%; }
+  .skills-table tr td { padding: 2px 0; vertical-align: top; font-size: 10pt; }
+  .skills-table td:first-child { font-weight: 700; width: 130px; color: #1a1a1a; white-space: nowrap; }
+  .skills-table td:last-child { color: #222; }
+
+  /* ---- EXPERIENCE ---- */
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .exp-title { font-weight: 700; font-size: 10.5pt; }
+  .exp-date { font-size: 9.5pt; color: #444; }
+  .exp-company { font-size: 10pt; color: #444; margin-bottom: 5px; }
+  .exp-company span { font-style: italic; }
+  ul.bullets { list-style: disc; padding-left: 18px; margin-top: 4px; }
+  ul.bullets li { font-size: 10pt; color: #222; margin-bottom: 3px; line-height: 1.5; }
+
+  /* ---- PROJECTS ---- */
+  .project-item { margin-bottom: 10px; }
+  .project-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .project-name { font-weight: 700; font-size: 10.5pt; }
+  .project-tech { font-size: 9pt; color: #555; font-style: italic; }
+
+  /* ---- EDUCATION ---- */
+  .edu-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .edu-title { font-weight: 700; font-size: 10.5pt; }
+  .edu-date { font-size: 9.5pt; color: #444; }
+  .edu-sub { font-size: 10pt; color: #444; margin-top: 1px; }
+
+  /* ---- ACHIEVEMENTS ---- */
+  .achieve p { font-size: 10pt; color: #222; line-height: 1.6; }
+
+  /* ---- PRINT ---- */
+  @media print {
+    body { background: #fff; }
+    .page { padding: 20px 32px; max-width: 100%; }
+    .no-print { display: none; }
+  }
+
+  /* ---- PRINT BUTTON ---- */
+  .print-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 28px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 11pt;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+  }
+  .print-btn:hover { background: #333; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- PRINT BUTTON -->
+  <div class="no-print" style="text-align:center; margin-bottom:18px;">
+    <button class="print-btn" onclick="window.print()">⬇ Save as PDF (Ctrl+P → Save as PDF)</button>
+    <p style="font-size:9pt; color:#888; margin-top:6px;">Print → Destination: Save as PDF → Save</p>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>VIBHOR SAINI</h1>
+    <div class="contact-line">
+      +91 9719837100
+      <span>|</span>
+      <a href="mailto:vibhorsaini022@gmail.com">vibhorsaini022@gmail.com</a>
+      <span>|</span>
+      <a href="https://linkedin.com/in/vibhor-saini01">linkedin.com/in/vibhor-saini01</a>
+      <span>|</span>
+      <a href="https://github.com/Vibhor-saini">github.com/Vibhor-saini</a>
+      <span>|</span>
+      <a href="https://vibhor-saini.github.io/my_work/">Portfolio</a>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <div class="section summary">
+    <div class="section-title">Professional Summary</div>
+    <p>
+      Full Stack Developer with 2.6 years of experience building Laravel-based automation systems, realtime applications,
+      and API integrations for production environments. Delivered CRM platforms, SMS automation workflows, secure authentication
+      portals, and server-side ad tracking systems for clients across healthcare, recruitment, e-commerce, and creative agency domains.
+      Strong background in backend architecture, webhook processing, queue-based job systems, and third-party API integrations.
+      Experienced in VPS deployment, server configuration, and end-to-end client project delivery.
+    </p>
+  </div>
+
+  <!-- TECHNICAL SKILLS -->
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <table class="skills-table">
+      <tr>
+        <td>Backend</td>
+        <td>PHP, Laravel, Node.js, REST API Development, Queues &amp; Jobs, Webhooks, Middleware, Redis, Eloquent ORM</td>
+      </tr>
+      <tr>
+        <td>Frontend</td>
+        <td>HTML5, CSS3, JavaScript, Bootstrap, Livewire, Alpine.js, jQuery</td>
+      </tr>
+      <tr>
+        <td>CMS / E-Commerce</td>
+        <td>WordPress, WooCommerce, Custom Themes, Custom Plugins, ACF Pro, Elementor</td>
+      </tr>
+      <tr>
+        <td>Integrations</td>
+        <td>Twilio SMS, Meta Pixel, Meta Conversions API (CAPI), WhatsApp API, Stripe, Razorpay, Google APIs, Zapier</td>
+      </tr>
+      <tr>
+        <td>Realtime</td>
+        <td>Laravel Reverb, Pusher, WebSockets, Laravel Echo, Livewire</td>
+      </tr>
+      <tr>
+        <td>Database</td>
+        <td>MySQL, Database Schema Design, Query Optimization, Query Debugging, phpMyAdmin</td>
+      </tr>
+      <tr>
+        <td>DevOps / Server</td>
+        <td>Linux VPS, Nginx, Apache, SSL/TLS, Cloudflare, Git, GitHub, Deployment Pipelines</td>
+      </tr>
+      <tr>
+        <td>Tools</td>
+        <td>Postman, VS Code, Composer, Artisan CLI, cPanel, FileZilla, Notion</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">Experience</div>
+    <div>
+      <div class="exp-header">
+        <span class="exp-title">Backend Developer — PHP, Laravel &amp; APIs</span>
+        <span class="exp-date">Feb 2021 – Present</span>
+      </div>
+      <div class="exp-company">Baseline IT Development &nbsp;|&nbsp; <span>Chandigarh, India</span></div>
+      <ul class="bullets">
+        <li>Designed and developed RESTful APIs in Laravel/PHP to synchronize data across CRM, accounting, and logistics platforms, serving multiple integrated third-party systems simultaneously.</li>
+        <li>Built and deployed webhook listeners for real-time event processing with retry handling and failure recovery, improving data pipeline reliability for production systems.</li>
+        <li>Implemented server-side Meta Conversions API (CAPI) for D2C clients, restoring ad tracking accuracy post-iOS 14 restrictions and improving ROAS through cleaner conversion data.</li>
+        <li>Integrated Twilio SMS automation into a Laravel booking platform — automated confirmation, reminder, and follow-up messages, eliminating manual staff follow-up calls entirely.</li>
+        <li>Developed a Node.js secure asset access portal with session management and account lockout protection, securing client file assets for distributed creative teams.</li>
+        <li>Built middleware services to maintain data consistency across multiple third-party systems with event deduplication and conflict resolution logic.</li>
+        <li>Configured and managed Linux VPS environments including Nginx, SSL/TLS setup, Cloudflare integration, and application deployment for client-facing production systems.</li>
+        <li>Collaborated directly with clients to translate business workflow requirements into scalable backend architecture and automated processes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-title">Projects</div>
+
+    <div class="project-item">
+      <div class="project-header">
+        <span class="project-name">Clinic Management System</span>
+        <span class="project-tech">Laravel, Pusher, MySQL, Bootstrap 5, WebSockets</span>
+      </div>
+      <ul class="bullets">
+        <li>Built a complete clinic management platform replacing paper-based records — digitized patient management, appointment scheduling, and staff workflows for a healthcare client.</li>
+        <li>Integrated Pusher WebSockets for real-time staff notifications on new appointments and urgent tasks, eliminating manual coordination delays.</li>
+        <li>Implemented role-based access control with middleware and policies — doctors access only their patients while admins retain full visibility.</li>
+      </ul>
+    </div>
+
+    <div class="project-item">
+      <div class="project-header">
+        <span class="project-name">Job Portal Platform</span>
+        <span class="project-tech">Laravel, MySQL, Bootstrap, Admin Panel</span>
+      </div>
+      <ul class="bullets">
+        <li>Developed a full recruitment portal replacing spreadsheet-based hiring — enabled structured job posting, candidate application tracking, and recruiter workflow management.</li>
+        <li>Built responsive frontend and admin dashboard supporting 100+ applications with status tracking and candidate management workflows.</li>
+      </ul>
+    </div>
+
+    <div class="project-item">
+      <div class="project-header">
+        <span class="project-name">Secure Asset Access Portal (SAM)</span>
+        <span class="project-tech">Node.js, Session Management, Authentication, Cloud Integration</span>
+      </div>
+      <ul class="bullets">
+        <li>Built a Node.js authentication portal for a creative agency, securing access to 459+ shared project assets with login protection and account lockout after failed attempts.</li>
+        <li>Implemented timed account lock windows preventing brute-force attacks without blocking legitimate users — unauthorized access attempts reduced to zero post-deployment.</li>
+      </ul>
+    </div>
+
+    <div class="project-item">
+      <div class="project-header">
+        <span class="project-name">Real-Time Chat Application</span>
+        <span class="project-tech">Laravel, Reverb, Livewire, MySQL, WebSockets</span>
+      </div>
+      <ul class="bullets">
+        <li>Built a real-time messaging platform with typing indicators, conversation management, and live sync — replaced email-based team coordination with instant messaging.</li>
+        <li>Handled concurrent WebSocket connections using Laravel Reverb with secure session-based authentication.</li>
+      </ul>
+    </div>
+
+    <div class="project-item">
+      <div class="project-header">
+        <span class="project-name">Twilio SMS Notification System</span>
+        <span class="project-tech">Laravel, Twilio, Queues, Redis, MySQL</span>
+      </div>
+      <ul class="bullets">
+        <li>Automated full customer communication cycle for a booking platform — confirmation, 24-hour reminder, and 1-hour reminder SMS sent via queue-based job system with retry logic.</li>
+        <li>Eliminated manual staff follow-up calls; system processes all touchpoints autonomously with SMS delivery status tracking and admin campaign management dashboard.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu-header">
+      <span class="edu-title">Bachelor of Technology in Computer Science (77%)</span>
+      <span class="edu-date">Aug 2019 – Jun 2023</span>
+    </div>
+    <div class="edu-sub">AKTU University &nbsp;|&nbsp; Uttar Pradesh</div>
+  </div>
+
+  <!-- ACHIEVEMENTS -->
+  <div class="section achieve">
+    <div class="section-title">Achievements</div>
+    <p>
+      Received multiple performance recognitions including 5× Employee of the Month award and company-wide "True Gem"
+      award for consistent contributions to backend automation, system reliability, and client-facing project delivery.
+    </p>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

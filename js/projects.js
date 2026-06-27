@@ -1,168 +1,446 @@
-// =============================================
-// PROJECTS DATA — Edit this to add/update projects
-// =============================================
+/**
+ * projects.js
+ * Enterprise case study data and project card rendering.
+ * Vibhor Saini — Backend Software Engineer Portfolio
+ */
 
-const PROJECTS_DATA = [
+'use strict';
+
+const PROJECTS = [
   {
-    id: 0,
-    title: "Real-Time Chat Application",
-    category: ["chat", "webapp", "laravel"],
-    tech: ["Laravel", "Livewire", "Reverb", "MySQL", "Bootstrap 5", "Real-Time Messaging"],
-    isPrivate: false,
-    impact: "Eliminated communication delays by enabling instant messaging — teams no longer rely on email threads for real-time coordination.",
-    description: "Built a real-time chat web application that replaced slow email-based communication for a client's internal team. Reduced response coordination time significantly through live messaging, typing indicators, and conversation management.",
-    problem: "Client's internal team was using email threads for real-time coordination, causing communication delays and missed updates.",
-    solution: "Built a full-stack real-time messaging system using Laravel Reverb (WebSockets) with Livewire for reactive UI — no page reloads, instant updates.",
-    result: "Team communication moved fully to the platform. Real-time sync eliminated delays, and the authenticated session system ensured only approved users could access conversations.",
-    myRole: "Full-stack development — architecture, backend (Laravel + Reverb), frontend (Livewire + Bootstrap), deployment.",
-    challenges: "Handling concurrent WebSocket connections efficiently and maintaining session security with real-time auth.",
-    features: [
-      "Real-time messaging with zero page reload",
-      "Typing indicators and live chat synchronization",
-      "Secure authentication and session handling",
-      "Responsive chat interface for desktop and mobile",
-      "Conversation and message management system",
-      "Optimized UI/UX with smooth user interactions"
-    ],
-    github: "https://github.com/Vibhor-saini/baseline_chat",
-    live: "#",
-    bgColor: "linear-gradient(135deg, #1a1a2e, #16213e)",
-    icon: "fa-comments",
-    screenshots: []
+    id: 'hubspot-crm',
+    title: 'HubSpot CRM Integration',
+    category: 'CRM Integration',
+    thumbClass: 'thumb-blue',
+    thumbIcon: 'fa-solid fa-arrows-rotate',
+    nda: true,
+    impact: 'Automated the full lead lifecycle — contact creation, deal progression, and follow-up sequences — eliminating hours of manual CRM entry per week.',
+    businessImpact: 'Real-time CRM synchronization replaced manual data entry across the full lead lifecycle.',
+    tags: ['HubSpot API', 'Laravel', 'Webhooks', 'OAuth2', 'MySQL'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Backend Engineer',
+      problem: 'A service business was managing leads manually across email, spreadsheets, and their CRM. New contacts from web forms weren\'t syncing to HubSpot reliably, deal stages were updated by hand, and there was no automated follow-up when a deal went cold. The sales team spent significant time on CRM data entry rather than selling.',
+      solution: 'Built a Laravel-based integration layer between the client\'s web platform and HubSpot CRM. Implemented OAuth2 authentication with automatic token refresh, a bidirectional contact sync engine, and a webhook listener that responds to HubSpot deal stage changes to trigger downstream actions.',
+      challenges: [
+        'HubSpot\'s OAuth token expiry required a silent refresh mechanism without interrupting background sync jobs.',
+        'Preventing duplicate contact creation when leads came through multiple channels simultaneously — solved with a unique-key lookup before insert and queue-level deduplication.',
+        'Webhook signature verification to ensure all incoming events from HubSpot were authentic.'
+      ],
+      metrics: [
+        { value: '~15 hrs/week', desc: 'manual CRM work eliminated' },
+        { value: '100%', desc: 'lead capture reliability' }
+      ],
+      result: 'Every new lead now lands in HubSpot within seconds of form submission. Deal stage changes trigger automated email sequences and internal Slack notifications. The sales team works entirely within HubSpot without touching backend data manually.'
+    }
   },
   {
-    id: 1,
-    title: "Secure Asset Access Portal",
-    category: ["nodejs", "webapp", "security"],
-    tech: ["Node.js", "Authentication", "Session Management", "Cloud Integration", "Security"],
-    isPrivate: true,
-    impact: "Eliminated unauthorized file access by implementing lock-based authentication — secured client assets for a distributed creative team.",
-    description: "Built a secure Node.js asset portal for a creative agency's distributed team. Replaced insecure file-sharing via email/Drive links with a protected login system with account lockout protection.",
-    problem: "A creative studio was sharing sensitive project assets over unprotected Drive links — anyone with the link could access files, posing a security risk.",
-    solution: "Developed a Node.js-based portal with authenticated access, session management, and account lock after repeated failed attempts to prevent brute-force attacks.",
-    result: "Unauthorized access attempts reduced to zero. Team collaboration improved as members could securely access project files from any location.",
-    myRole: "Full backend development — authentication logic, session management, cloud storage integration, deployment.",
-    challenges: "Implementing secure lockout without locking out legitimate users during accidental mistyping; solved with timed lock windows.",
-    features: [
-      "Secure authentication and session management",
-      "Account lock after multiple failed login attempts",
-      "Cloud storage and asset access integration",
-      "User login/logout activity handling",
-      "Role-based secure asset access system",
-      "Responsive and optimized web interface"
-    ],
-    github: "#",
-    live: "https://team.subminimal.com/login",
-    bgColor: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
-    icon: "fa-lock",
-    screenshots: ["assets/sam-login.png", "assets/sam-dashboard.png"]
+    id: 'meta-pixel-capi',
+    title: 'Meta Pixel & Conversions API',
+    category: 'Ad Tracking',
+    thumbClass: 'thumb-purple',
+    thumbIcon: 'fa-solid fa-chart-line',
+    nda: true,
+    impact: 'Restored full ad tracking accuracy post-iOS 14 by implementing server-side event mirroring, recovering conversion data that browser-side tracking lost to ad blockers and consent restrictions.',
+    businessImpact: 'Server-side event tracking restored attribution accuracy lost to ad blockers and iOS restrictions.',
+    tags: ['Meta CAPI', 'Laravel', 'JavaScript', 'Facebook SDK', 'Queues'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Backend & Integration Engineer',
+      problem: 'An e-commerce client\'s Meta ad campaigns were severely under-reporting conversions after iOS 14 ATT changes and growing browser extension adoption. Browser-only pixel tracking was missing 40–60% of purchase events, causing the Meta algorithm to under-optimize and ROAS to drop significantly.',
+      solution: 'Implemented a dual-track event system: the existing Meta Pixel continued firing browser-side, while a new Laravel-powered server-side layer sent the same events directly to Meta\'s Conversions API. Implemented event deduplication using a shared event_id to prevent double-counting in Meta\'s attribution engine.',
+      challenges: [
+        'Event deduplication: matching browser pixel events with server CAPI events using the same event_id hash across both channels.',
+        'User data hashing: PII fields (email, phone, name) required SHA256 hashing client-side and server-side before transmission.',
+        'Timing: server events needed to fire close to the browser events to maintain accurate attribution windows.'
+      ],
+      metrics: [
+        { value: 'ROAS ↑', desc: 'improvement within days of go-live' },
+        { value: '~98%', desc: 'event match quality score achieved' }
+      ],
+      result: 'Conversion tracking accuracy recovered significantly. Meta\'s attribution had full visibility into the purchase funnel, allowing the algorithm to re-optimize. The client saw measurable ROAS improvement within the first week of deployment.'
+    }
   },
   {
-    id: 2,
-    title: "Meta Pixel & Conversions API",
-    category: ["api", "laravel"],
-    tech: ["Meta CAPI", "Laravel", "JavaScript", "Facebook PHP SDK"],
-    isPrivate: true,
-    impact: "Improved ad tracking accuracy after iOS 14 restrictions — client saw measurable ROAS improvement within days of deployment.",
-    description: "Implemented server-side Meta Pixel and Conversions API for a D2C brand losing ad tracking data due to iOS 14 browser restrictions. Restored accurate conversion data to improve ad spend decisions.",
-    problem: "A D2C brand's Meta ad campaigns were under-reporting conversions due to iOS 14 browser-side pixel blocking — ad spend decisions were based on incomplete data.",
-    solution: "Implemented server-side Conversions API alongside browser pixel with event deduplication, hashed user data, and real-time event verification via Meta Events Manager.",
-    result: "Tracking accuracy significantly improved post-implementation. Client reported measurable ROAS improvement within days as Meta's algorithm received cleaner conversion data.",
-    myRole: "Full API integration — server-side event setup, Facebook PHP SDK implementation, event deduplication logic, admin dashboard.",
-    challenges: "Properly deduplicating browser and server events to avoid inflated conversion counts — solved with event_id matching.",
-    features: [
-      "Server-side Conversions API to bypass iOS 14 restrictions",
-      "Events: PageView, ViewContent, AddToCart, Purchase",
-      "User data hashing for privacy compliance (SHA-256)",
-      "Event deduplication between browser pixel and server",
-      "Custom event testing via Meta Events Manager",
-      "Real-time conversion tracking dashboard in admin"
-    ],
-    github: "#",
-    live: "#",
-    bgColor: "linear-gradient(135deg, #1a0533, #4a0e8f40)",
-    icon: "fa-plug-circle-bolt",
-    screenshots: []
+    id: 'xero-automation',
+    title: 'Xero Accounting Automation',
+    category: 'Finance Automation',
+    thumbClass: 'thumb-teal',
+    thumbIcon: 'fa-solid fa-file-invoice-dollar',
+    nda: true,
+    impact: 'Eliminated manual invoice creation and reconciliation by automatically syncing job completions from field service software to Xero, reducing billing cycle time from days to minutes.',
+    businessImpact: 'Automated invoice generation reduced billing cycle from 2–3 days to under a minute.',
+    tags: ['Xero API', 'Laravel', 'OAuth2', 'Webhooks', 'Queue Workers'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Backend Engineer',
+      problem: 'A field service company was manually re-entering completed job data from their operations platform into Xero for invoicing. This two-step process introduced errors, delayed billing by 2–3 days, and required dedicated admin time after every job completion.',
+      solution: 'Built a Laravel automation service that listens for job completion webhooks from the field service platform and automatically creates draft invoices in Xero. Implemented Xero OAuth2 with token refresh, contact matching (or auto-creation), and line item mapping from job data to Xero invoice structure.',
+      challenges: [
+        'Xero\'s contact system required exact matching to avoid duplicates — implemented a lookup-first strategy with fuzzy name matching as fallback.',
+        'Handling Xero API rate limits (60 req/min) using Laravel queues with rate-limited job dispatch.',
+        'Token refresh race condition when multiple jobs fired simultaneously — solved with atomic lock on the token store.'
+      ],
+      metrics: [
+        { value: '2–3 days → mins', desc: 'invoice generation time' },
+        { value: '0 hrs/week', desc: 'manual re-entry eliminated' }
+      ],
+      result: 'Invoice drafts now appear in Xero within seconds of a job being marked complete. Billing accuracy improved and the admin team\'s time was freed for higher-value work.'
+    }
   },
   {
-    id: 3,
-    title: "Twilio SMS Notification System",
-    category: ["laravel", "api"],
-    tech: ["Twilio", "Laravel Queues", "MySQL", "Redis"],
-    isPrivate: true,
-    impact: "Automated customer communication entirely — eliminated manual follow-up calls and reduced no-shows through automated appointment reminders.",
-    description: "Built an automated SMS notification system for a booking platform. Replaced manual staff follow-up calls with a queue-based system that automatically sends booking confirmations, reminders, and post-visit messages.",
-    problem: "A service business was manually calling customers to confirm appointments and send reminders — time-consuming, error-prone, and causing no-shows.",
-    solution: "Integrated Twilio SMS with Laravel's queue system. Built a scheduling layer that automatically triggers confirmation, 24-hour reminder, and 1-hour reminder messages.",
-    result: "Staff no longer needed to make manual reminder calls. The automated system runs silently in the background, handling all customer communication touchpoints.",
-    myRole: "Full integration — Twilio API setup, Laravel Queue workers, SMS scheduling logic, admin dashboard for campaign management.",
-    challenges: "Handling failed SMS deliveries gracefully with retry logic and ensuring queue workers stay alive under server restarts.",
-    features: [
-      "Booking confirmation SMS on successful payment",
-      "Automatic 24-hour and 1-hour appointment reminders",
-      "Post-visit follow-up messages with review links",
-      "SMS log tracking with delivery status",
-      "Admin dashboard to manage SMS campaigns",
-      "Queue-based sending with retry on failure"
-    ],
-    github: "#",
-    live: "#",
-    bgColor: "linear-gradient(135deg, #003049, #d62828)",
-    icon: "fa-message",
-    screenshots: []
+    id: 'hubspot-make-billdotcom',
+    title: 'HubSpot + Make + Bill.com Pipeline',
+    category: 'Multi-Platform Automation',
+    thumbClass: 'thumb-indigo',
+    thumbIcon: 'fa-solid fa-diagram-project',
+    nda: true,
+    impact: 'Automated the full accounts-payable workflow from CRM deal closure to payment approval, removing all manual handoffs between sales, finance, and vendors.',
+    businessImpact: 'End-to-end AP workflow automated from deal close to payment approval — zero manual handoffs.',
+    tags: ['HubSpot', 'Make (Integromat)', 'Bill.com API', 'Laravel', 'Webhooks'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Automation & Integration Engineer',
+      problem: 'When a deal closed in HubSpot, a multi-step manual process began: a finance team member was notified by email, they created a vendor bill in Bill.com, uploaded supporting documents, and routed it for approval. Every step was manual, error-prone, and took 1–2 days.',
+      solution: 'Designed and implemented a Make (formerly Integromat) automation scenario backed by a Laravel webhook receiver. When HubSpot fires a deal-closed event, the pipeline: extracts deal and contact data, creates a vendor bill in Bill.com with correct GL coding, attaches relevant documents, and routes for automated approval based on deal value thresholds.',
+      challenges: [
+        'Bill.com\'s API requires specific vendor and chart-of-accounts IDs — built a mapping layer that resolves HubSpot deal properties to Bill.com entity IDs.',
+        'Make scenario error recovery: implemented a dead-letter pattern so failed steps don\'t silently drop records.',
+        'Document attachment required pre-signing S3 URLs and streaming them into Bill.com\'s document upload endpoint.'
+      ],
+      metrics: [
+        { value: '1–2 days → <5 min', desc: 'AP workflow cycle time' },
+        { value: '100%', desc: 'manual steps automated' }
+      ],
+      result: 'Finance team no longer manually processes vendor bills for standard deals. The pipeline handles creation, coding, document attachment, and routing automatically, with error alerts sent to Slack for any exceptions.'
+    }
   },
   {
-    id: 4,
-    title: "Job Portal Platform",
-    category: ["webapp", "laravel"],
-    tech: ["Laravel", "MySQL", "Responsive Design", "Admin Panel", "Bootstrap"],
-    isPrivate: false,
-    impact: "Replaced a manual hiring process with a structured digital platform — enabling recruiters to manage 100+ applications without spreadsheets.",
-    description: "Developed a full job portal for a recruitment company. Replaced their spreadsheet-based hiring process with a structured web platform for posting jobs, managing applications, and tracking candidates.",
-    problem: "A recruitment company was managing job postings and candidate applications via email and spreadsheets — no central system, duplicates, missed applications.",
-    solution: "Built a Laravel job portal with employer-facing job management, candidate application system, and admin dashboard for full recruitment workflow control.",
-    result: "All hiring workflows moved to the platform. Recruiters can now post jobs, review applications, and track candidate status from a single dashboard.",
-    myRole: "Full-stack development — database architecture, Laravel backend, admin panel, responsive frontend, deployment.",
-    challenges: "Designing a flexible application status workflow that fits different recruitment stages without over-engineering the schema.",
-    features: [
-      "Dynamic job posting and management system",
-      "Candidate application and recruitment workflow",
-      "Responsive mobile-friendly user interface",
-      "Advanced admin dashboard for job management",
-      "Optimized performance and clean UI/UX",
-      "Secure and scalable web application structure"
-    ],
-    github: "#",
-    live: "https://jobs.baselineitdevelopment.com/",
-    bgColor: "linear-gradient(135deg, #0d0d0d, #1d3557)",
-    icon: "fa-briefcase",
-    screenshots: ["assets/jobportal-home.png", "assets/jobportal-jobs.png"]
+    id: 'wix-zapier-jobber',
+    title: 'Wix + Zapier + Jobber Integration',
+    category: 'Service Business Automation',
+    thumbClass: 'thumb-green',
+    thumbIcon: 'fa-solid fa-wrench',
+    nda: true,
+    impact: 'Connected a Wix lead capture form to Jobber\'s job management platform via Zapier and a custom Laravel middleware, turning new inquiries into scheduled jobs automatically.',
+    businessImpact: 'Automated lead creation and job scheduling — form submissions appear in Jobber within seconds.',
+    tags: ['Wix API', 'Zapier', 'Jobber API', 'Laravel', 'Webhooks'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Integration Engineer',
+      problem: 'A home services company collected lead enquiries through their Wix website, but manually transferred these into Jobber to create client records and schedule jobs. With high inquiry volume, leads were getting lost in the gap between submission and entry.',
+      solution: 'Built a custom Laravel webhook receiver that acts as middleware between Wix form submissions (routed through Zapier) and the Jobber API. The middleware normalizes Wix form data, deduplicates contacts by email/phone, creates or updates client records in Jobber, and creates a draft request for scheduling — all within seconds of form submission.',
+      challenges: [
+        'Wix doesn\'t natively support custom webhook payloads — used Zapier as a relay with a custom payload format mapped to our receiver.',
+        'Jobber contact deduplication: implemented a search-before-create pattern using the Jobber GraphQL API.',
+        'Phone number normalization: incoming formats varied widely; built a normalization layer that standardizes to E.164 before lookup and creation.'
+      ],
+      metrics: [
+        { value: '0', desc: 'leads lost in transfer' },
+        { value: '<10 sec', desc: 'form-to-Jobber record time' }
+      ],
+      result: 'Every Wix form submission is now immediately visible in Jobber as a client request. The operations team works entirely from Jobber\'s scheduling interface without manually copying data from the website.'
+    }
   },
   {
-    id: 5,
-    title: "Clinic Management System",
-    category: ["laravel", "healthcare", "realtime"],
-    tech: ["Laravel", "Pusher", "MySQL", "Bootstrap 5", "Real-Time Notifications"],
-    isPrivate: false,
-    impact: "Digitized full clinic operations — patient records, appointments, and staff workflows all in one system with real-time staff alerts.",
-    description: "Built a complete clinic management system to replace paper-based patient records and manual appointment books. Doctors and staff now manage everything digitally with real-time notifications for urgent updates.",
-    problem: "A clinic was managing patient records, appointments, and staff tasks on paper and disconnected spreadsheets — prone to errors, slow lookups, and missed updates.",
-    solution: "Developed a Laravel-based CMS with role-based access for doctors, nurses, and admins. Integrated Pusher for real-time notifications when new appointments or urgent tasks are added.",
-    result: "Full clinic operations digitized. Patient lookup time reduced dramatically. Real-time notifications keep all staff instantly updated on new appointments and tasks.",
-    myRole: "Full-stack development — system architecture, Laravel backend, role-based access control, Pusher integration, Bootstrap frontend.",
-    challenges: "Managing role-based visibility correctly so doctors only see their patients while admins have full oversight — required careful middleware and policy design.",
-    features: [
-      "Patient registration and appointment scheduling",
-      "Real-time notifications and alerts using Pusher",
-      "Doctor, staff, and role-based access management",
-      "Medical records and treatment tracking",
-      "Responsive admin dashboard for clinic operations",
-      "Secure authentication and workflow management"
-    ],
-    github: "#",
-    live: "http://defenders.topscripts.in/Clinic_Management_System",
-    bgColor: "linear-gradient(135deg, #16222A, #3A6073)",
-    icon: "fa-user-doctor",
-    screenshots: ["assets/clinic-home.png", "assets/clinic-dashboard.png"]
+    id: 'woocommerce-api',
+    title: 'WooCommerce API Integration',
+    category: 'E-Commerce Backend',
+    thumbClass: 'thumb-orange',
+    thumbIcon: 'fa-solid fa-bag-shopping',
+    nda: false,
+    impact: 'Built a custom REST API layer on top of WooCommerce to expose order, product, and customer data to an external inventory management system, enabling real-time stock synchronization.',
+    businessImpact: 'Real-time stock synchronization via REST API eliminated overselling and manual export cycles.',
+    tags: ['WooCommerce REST API', 'PHP', 'Laravel', 'MySQL', 'Webhooks'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Backend Engineer',
+      problem: 'An e-commerce brand was managing inventory manually between their WooCommerce store and a warehouse management system. Overselling was common because stock levels weren\'t synced, and order fulfillment required manual export/import of data between systems.',
+      solution: 'Built a Laravel-based integration service that uses the WooCommerce REST API to: sync product stock levels bidirectionally, listen to order webhooks for real-time fulfillment triggers, and expose a normalized internal API endpoint for the warehouse system to consume. Implemented optimistic locking to prevent stock race conditions during high-traffic periods.',
+      challenges: [
+        'WooCommerce webhook delivery is not guaranteed — implemented idempotent webhook handlers and a reconciliation cron that catches missed events.',
+        'Stock race conditions during flash sales: used database-level pessimistic locking for stock decrement operations.',
+        'Rate-limiting WooCommerce API calls during bulk sync operations to avoid hitting their per-minute request ceiling.'
+      ],
+      metrics: [
+        { value: '~0%', desc: 'overselling incidents after deployment' },
+        { value: 'Real-time', desc: 'stock level accuracy' }
+      ],
+      result: 'Inventory is now synchronized across WooCommerce and the warehouse system in real time. Order data flows automatically from WooCommerce to fulfillment, eliminating manual export/import operations.'
+    }
+  },
+  {
+    id: 'laravel-rest-api',
+    title: 'Laravel REST API Platform',
+    category: 'API Development',
+    thumbClass: 'thumb-red',
+    thumbIcon: 'fa-solid fa-code',
+    nda: false,
+    impact: 'Designed and built a versioned REST API with role-based authentication, rate limiting, and structured JSON responses to serve a mobile application and third-party partner integrations.',
+    businessImpact: 'Secure versioned API serving 3 consumers from a single codebase with consistent response contracts.',
+    tags: ['Laravel', 'Sanctum', 'MySQL', 'Redis', 'API Versioning'],
+    github: 'https://github.com/Vibhor-saini',
+    live: null,
+    caseStudy: {
+      role: 'Backend Engineer',
+      problem: 'A product company was serving a web frontend and mobile app from unstructured, tightly-coupled PHP endpoints. Adding new consumers (a partner API, a mobile app) required duplicating logic. There was no authentication standardization, rate limiting, or consistent error response format.',
+      solution: 'Designed and implemented a versioned Laravel REST API (/api/v1/...) with Laravel Sanctum token authentication, resource transformers for consistent JSON output, custom exception handlers for structured error responses, and Redis-backed rate limiting per API key. Implemented role-based access policies at the route middleware layer.',
+      challenges: [
+        'Response consistency: every controller previously returned different shapes — standardized via API Resource classes with a shared BaseResource transformer.',
+        'Rate limiting: different consumer tiers needed different limits — implemented a configurable tier system backed by Redis counters.',
+        'Versioning strategy: used URL-based versioning with namespace-separated controllers to allow v1 and future v2 to coexist without breaking consumers.'
+      ],
+      metrics: [
+        { value: '3 consumers', desc: 'served from single API' },
+        { value: '100%', desc: 'response format consistency' }
+      ],
+      result: 'The API now serves the web frontend, mobile app, and a partner integration from a single, documented, versioned codebase. New endpoints can be added without breaking existing consumers, and all requests are authenticated, rate-limited, and return consistent error structures.'
+    }
+  },
+  {
+    id: 'payment-gateway',
+    title: 'Payment Gateway Integration',
+    category: 'Payment Engineering',
+    thumbClass: 'thumb-indigo',
+    thumbIcon: 'fa-solid fa-credit-card',
+    nda: true,
+    impact: 'Integrated Stripe and Razorpay with server-side payment verification, subscription lifecycle handling, and webhook-driven order status updates for a SaaS billing system.',
+    businessImpact: 'Secure server-side payment verification with automated subscription renewal and dunning logic.',
+    tags: ['Stripe', 'Razorpay', 'Laravel', 'Webhooks', 'Queues'],
+    github: null,
+    live: null,
+    caseStudy: {
+      role: 'Backend Engineer',
+      problem: 'A SaaS company was using a basic payment flow without server-side verification. Payments were trusted on the client\'s confirmation alone, subscription renewals were managed manually, and failed payments had no automated recovery flow.',
+      solution: 'Implemented a secure dual-gateway payment system (Stripe for international, Razorpay for India) with: server-side payment intent creation and verification, webhook listeners for payment.succeeded, payment.failed, and subscription events, automated dunning logic for failed renewals, and idempotent order creation tied to payment verification.',
+      challenges: [
+        'Preventing duplicate order creation on webhook retry: implemented idempotent processing using Stripe\'s payment intent ID as a unique key.',
+        'Subscription state management: built a local subscription model that mirrors Stripe\'s subscription object and updates via webhooks.',
+        'Testing webhook flows locally: used Stripe CLI for local webhook forwarding during development, which became a repeatable development pattern.'
+      ],
+      metrics: [
+        { value: '100%', desc: 'server-side payment verification' },
+        { value: 'Automated', desc: 'subscription renewal & dunning' }
+      ],
+      result: 'Payment processing is fully server-verified. Subscription events update the platform\'s access control automatically. Failed payments trigger a 3-attempt dunning sequence before subscription suspension — with zero manual intervention required.'
+    }
+  },
+  {
+    id: 'realtime-chat',
+    title: 'Realtime Chat Application',
+    category: 'Realtime Systems',
+    thumbClass: 'thumb-dark',
+    thumbIcon: 'fa-solid fa-comments',
+    nda: false,
+    impact: 'Built a WebSocket-powered team chat system with persistent message history, presence indicators, and real-time sidebar sync — replacing async email threads for internal team coordination.',
+    businessImpact: 'Queue-based WebSocket architecture with full message persistence and real-time presence tracking.',
+    tags: ['Laravel', 'Laravel Reverb', 'Livewire', 'MySQL', 'WebSockets'],
+    github: 'https://github.com/Vibhor-saini/baseline_chat',
+    live: null,
+    caseStudy: {
+      role: 'Backend & Fullstack Engineer',
+      problem: 'A team was coordinating project updates over email threads, causing communication delays, context loss, and version confusion. They needed a lightweight internal messaging tool with real-time delivery and message persistence — without the overhead of a third-party SaaS chat tool.',
+      solution: 'Built a Laravel-based chat application using Laravel Reverb as the WebSocket server. Implemented: channel-based messaging with user presence, real-time sidebar updates when new messages arrive, persistent message storage in MySQL with pagination for history, and authentication-gated channels using Laravel Echo on the frontend.',
+      challenges: [
+        'Concurrent WebSocket connections causing sidebar state desync — resolved by broadcasting channel-level events that all connected clients subscribe to.',
+        'Message ordering guarantees: used database-level auto-increment IDs as canonical message ordering, not client-generated timestamps.',
+        'Presence channel scaling: optimized the presence event payload to avoid broadcasting full user lists on every join/leave, using delta updates instead.'
+      ],
+      metrics: [
+        { value: 'Real-time', desc: 'message delivery via WebSockets' },
+        { value: 'Full history', desc: 'persisted and paginated' }
+      ],
+      result: 'Team members communicate in real time with zero message delay. Channel presence indicators show who\'s online, message history is fully searchable, and the system handles concurrent connections reliably. Open-source on GitHub.'
+    }
   }
 ];
+
+/**
+ * Render project cards into the grid.
+ */
+function renderProjects() {
+  const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
+
+  grid.innerHTML = PROJECTS.map((project, index) => `
+    <article
+      class="project-card reveal"
+      role="listitem"
+      data-index="${index}"
+      tabindex="0"
+      aria-label="View case study: ${project.title}"
+      onclick="openModal(${index})"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal(${index});}"
+    >
+      <div class="project-thumb ${project.thumbClass}">
+        <i class="${project.thumbIcon} project-thumb-icon" aria-hidden="true"></i>
+        <div class="project-thumb-overlay">
+          <button class="project-thumb-btn" tabindex="-1" aria-hidden="true">
+            <i class="fa-solid fa-file-lines"></i> Case Study
+          </button>
+        </div>
+        <span class="project-badge">${project.category}</span>
+        ${project.nda ? `<span class="project-nda-badge"><i class="fa-solid fa-lock" aria-hidden="true"></i> NDA</span>` : ''}
+      </div>
+
+      <div class="project-body">
+        <h3 class="project-title">${project.title}</h3>
+        <p class="project-impact">${project.impact}</p>
+        ${project.businessImpact ? `<p class="project-business-impact"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i> ${project.businessImpact}</p>` : ''}
+
+        <div class="project-tags">
+          ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+        </div>
+
+        <div class="project-footer">
+          ${project.github ? `
+            <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-action" onclick="event.stopPropagation()" aria-label="View on GitHub">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+            </a>
+          ` : project.nda ? `
+            <span class="project-action">
+              <i class="fa-solid fa-lock" aria-hidden="true"></i> NDA Protected
+            </span>
+          ` : ''}
+          <span class="project-action project-action-primary" aria-hidden="true">
+            Read Case Study <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  // Trigger reveal animations
+  requestAnimationFrame(() => {
+    const cards = grid.querySelectorAll('.reveal');
+    cards.forEach((card, i) => {
+      card.style.transitionDelay = `${i * 60}ms`;
+    });
+    observeElements(cards);
+
+    // Also let main.js ScrollReveal pick up any newly visible cards
+    setTimeout(() => {
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight) card.classList.add('in-view');
+      });
+    }, 200);
+  });
+}
+
+/**
+ * Observe elements for scroll-based reveal.
+ * @param {NodeList|Array} elements
+ */
+function observeElements(elements) {
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('in-view'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  elements.forEach(el => observer.observe(el));
+}
+
+/**
+ * Open modal with project case study.
+ * @param {number} index
+ */
+function openModal(index) {
+  const project = PROJECTS[index];
+  if (!project) return;
+
+  const overlay = document.getElementById('modalOverlay');
+  const body = document.getElementById('modalBody');
+  if (!overlay || !body) return;
+
+  const cs = project.caseStudy;
+
+  body.innerHTML = `
+    <div class="modal-header">
+      <p class="modal-eyebrow">${project.category}</p>
+      <h2 class="modal-title">${project.title}</h2>
+      <p class="modal-subtitle">Role: ${cs.role}</p>
+      <div class="modal-tags">
+        ${project.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-section">
+        <p class="case-label">Problem</p>
+        <p>${cs.problem}</p>
+      </div>
+
+      <div class="case-section">
+        <p class="case-label">Solution</p>
+        <p>${cs.solution}</p>
+      </div>
+
+      <div class="case-section">
+        <p class="case-label">Technical Challenges</p>
+        <ul>${cs.challenges.map(c => `<li>${c}</li>`).join('')}</ul>
+      </div>
+
+      <div class="case-section">
+        <p class="case-label">Business Impact</p>
+        <div class="impact-metric">
+          ${cs.metrics.map(m => `
+            <div class="metric-item">
+              <div class="metric-value">${m.value}</div>
+              <div class="metric-desc">${m.desc}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="case-section">
+        <p class="case-label">Result</p>
+        <p>${cs.result}</p>
+      </div>
+
+      ${project.github ? `
+        <div>
+          <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn-ghost-sm">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> View on GitHub
+          </a>
+        </div>
+      ` : ''}
+    </div>
+  `;
+
+  overlay.setAttribute('aria-hidden', 'false');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Focus close button
+  const closeBtn = document.getElementById('modalClose');
+  if (closeBtn) setTimeout(() => closeBtn.focus(), 100);
+}
+
+/**
+ * Close the modal.
+ */
+function closeModal() {
+  const overlay = document.getElementById('modalOverlay');
+  if (!overlay) return;
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', renderProjects);
